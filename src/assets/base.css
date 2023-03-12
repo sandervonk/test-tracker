@@ -1,5 +1,5 @@
 /* import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap");
 
 /* general vars */
 :root {
@@ -10,6 +10,7 @@
 /* light theme colors for the project */
 :root {
   /* colors */
+  --color-home: #ffffff;
   --color-bg: #ffffff;
   --color-primary: #242325;
   --color-on-primary: #ffffff;
@@ -17,12 +18,38 @@
   --color-accent: #000;
   --color-footer: #ddd;
   --color-footer-text: #222;
+  --color-link: #45818e;
+  --color-theme: #f5c14b;
+  --color-theme-accent: #000;
+  --color-theme-accent-border: #4c4c4c;
+  --color-on-action: #fff;
+  --color-action: #242325;
+  --filter-icon: none;
+  --color-secondary: #f2f2f2;
+  --shadow-highlight: 0 0 10px #00000030;
+  /* general */
+  --radius-sidebar: 20px;
+  --padding-sidebar: 20px;
 }
 
 /* dark theme alternatives */
 @media (prefers-color-scheme: dark) {
   :root {
     /*! dark color scheme */
+    --color-home: #16130e;
+    --color-bg: #1c1c1c;
+    --color-primary: #ffffff;
+    --color-on-primary: #242325;
+    --color-text: #fff;
+    --color-accent: #fff;
+    --color-footer: #3a3a3a;
+    --color-footer-text: #ddd;
+    --color-link: #178ca7;
+    --color-action: #f5c14b;
+    --color-on-action: #000;
+    --filter-icon: invert(1);
+    --color-secondary: #121212;
+    --shadow-highlight: 0 0 10px #00000020;
   }
 }
 
@@ -31,7 +58,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  position: relative;
+  position: unset;
   font-weight: normal;
 }
 html,
@@ -43,7 +70,7 @@ body {
   overflow: hidden;
 }
 body {
-  font-family: 'Inter', 'Poppins', 'Open Sans', sans-serif;
+  font-family: "Inter", "Poppins", "Open Sans", sans-serif;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-bg);
@@ -60,4 +87,11 @@ textarea,
 select,
 .router-link-exact-active {
   cursor: pointer;
+}
+
+a[href],
+.router-link-exact-active {
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 600;
 }
