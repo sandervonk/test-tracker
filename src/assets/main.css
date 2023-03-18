@@ -69,7 +69,7 @@ h4 {
 /* ,.click-action-inline  */ {
   cursor: pointer;
   transform: scale(1);
-  transition: transform 0.3s ease-out;
+  transition: var(--transition-click-action);
   transform-origin: center;
 }
 .click-action:hover
@@ -94,4 +94,27 @@ h4 {
   background-position: 7px center;
   background-size: 1.44em;
   margin-right: 0px;
+}
+
+/* override toast min width */
+@media (min-width: 500px) {
+  .toast {
+    width: unset;
+    max-width: unset;
+  }
+}
+/* fix popup icons on dark mode */
+.popup-icon {
+  filter: var(--filter-icon);
+}
+/* for page sizing */
+.center-1000 {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.gohome {
+  user-select: none;
+  cursor: pointer;
 }

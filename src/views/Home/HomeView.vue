@@ -1,9 +1,9 @@
 <template>
-  <main class="home">
+  <main class="home center-1000">
     <div id="home-main">
       <h2>Organize. Plan. Study.</h2>
       <h4 class="middle-text">Test tracker provides an effective way to manage upcoming exams.</h4>
-      <button class="action-btn auth-action click-action" @click="tomain">
+      <button class="action-btn auth-action can-login click-action" @click="tomain">
         {{ logged_in ? "Open App" : "Get Started" }}
       </button>
     </div>
@@ -42,9 +42,6 @@ export default {
   justify-content: stretch;
   align-items: center;
   height: 100%;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
 }
 #home-main > * {
   max-width: 600px;

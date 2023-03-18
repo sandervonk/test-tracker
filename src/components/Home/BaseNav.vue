@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1 class="hideoverflow">MV Test Tracker</h1>
+    <h1 class="gohome hideoverflow">MV Test Tracker</h1>
     <span class="flex-spacer"></span>
     <button
       class="nav-mobile-btn"
@@ -22,7 +22,10 @@
         >
       </nav>
       <span class="flex-spacer"></span>
-      <button id="nav-auth-btn" class="small-action-btn auth-action can-logout click-action">
+      <button
+        id="nav-auth-btn"
+        class="small-action-btn auth-action can-logout can-login click-action"
+      >
         Log {{ logged_in ? "Out" : "In" }}
       </button>
     </div>

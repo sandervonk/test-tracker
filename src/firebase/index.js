@@ -34,8 +34,19 @@ auth.onAuthStateChanged((user) => {
     store.set_user(user);
     // setup onSnapshot listener for user data
     onSnapshot(doc(db, "users", user.uid), { includeMetadataChanges: true }, (doc) => {
+      if (doc.metadata.hasPendingWrites) {
+        console.warn("local data updated");
+        return;
+      }
       console.warn("remote data updated");
+      // check if doc exists
+      if (!doc.exists()) {
+        store.createDoc();
+        return;
+      }
       store.doc = doc.data();
+      // run get_classes() to update classes
+      store.get_classes();
     });
     // rewrite the above with firebase 9 functions
   } else {

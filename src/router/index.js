@@ -13,7 +13,7 @@ const router = createRouter({
         page_title: "Home",
         theme_color: {
           light: "#ffffff",
-          dark: "#000000",
+          dark: "#16130e",
         },
         requiresAuth: false,
       },
@@ -27,24 +27,24 @@ const router = createRouter({
             page_title: "Home",
             theme_color: {
               light: "#ffffff",
-              dark: "#000000",
+              dark: "#16130e",
             },
             requiresAuth: false,
           },
         },
-        // {
-        //   path: "about",
-        //   name: "about",
-        //   component: () => import("../views/Home/AboutView.vue"),
-        //   meta: {
-        //     page_title: "About",
-        //     theme_color: {
-        //       light: "#ffffff",
-        //       dark: "#000000",
-        //     },
-        //     requiresAuth: false,
-        //   },
-        // },
+        {
+          path: "about",
+          name: "about",
+          component: () => import("../views/Home/AboutView.vue"),
+          meta: {
+            page_title: "About",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#16130e",
+            },
+            requiresAuth: false,
+          },
+        },
         // {
         //   path: "contact",
         //   name: "contact",
@@ -53,7 +53,7 @@ const router = createRouter({
         //     page_title: "Contact",
         //     theme_color: {
         //       light: "#ffffff",
-        //       dark: "#000000",
+        //       dark: "#16130e",
         //     },
         //     requiresAuth: false,
         //   },
@@ -66,7 +66,7 @@ const router = createRouter({
             page_title: "404",
             theme_color: {
               light: "#ffffff",
-              dark: "#000000",
+              dark: "#16130e",
             },
           },
         },
@@ -80,7 +80,7 @@ const router = createRouter({
         page_title: "Portal",
         theme_color: {
           light: "#ffffff",
-          dark: "#000000",
+          dark: "#121212",
         },
         requiresAuth: true,
       },
@@ -89,6 +89,9 @@ const router = createRouter({
     {
       path: "/app",
       redirect: "/portal",
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
 });
