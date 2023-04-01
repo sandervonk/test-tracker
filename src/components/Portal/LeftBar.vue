@@ -1,12 +1,16 @@
 <template>
   <div class="left-bar portal_sidebar" :class="{ active: sidebar_open }" @click="show_if_inactive">
-    <div class="branding-title gohome">MV Test Tracker</div>
-    <!-- Actions Panel -->
-    <!-- Class List -->
-    <ClassList />
-    <div class="flex-spacer"></div>
+    <div class="sidebar_overflow">
+      <div class="branding-title gohome">MV Test Tracker</div>
+      <div class="flex-spacer"></div>
+      <!-- Actions Panel -->
+      <ActionsPanel v-if="store && store.is_teacher" />
+      <!-- Class List -->
+      <ClassList />
+      <div class="flex-spacer"></div>
+    </div>
     <!-- Settings Button -->
-    <button class="settings_button click-action" title="Open Settings">
+    <button class="settings_button click-action" title="Open Settings" @click="placeholderToast">
       <div class="settings_icon"></div>
       <div class="toggle_text">Settings</div>
     </button>
@@ -18,17 +22,26 @@
 <script>
 import SidebarToggle from "@/components/Portal/SidebarToggle.vue";
 import ClassList from "./Left/ClassList.vue";
+import ActionsPanel from "./Left/ActionsPanel.vue";
+import { useMainStore } from "@/store";
+import { placeholderToast } from "@svonk/util";
 export default {
   name: "LeftBar",
   components: {
     SidebarToggle,
     ClassList,
+    ActionsPanel,
   },
   emits: ["close_right_bar"],
   data() {
     return {
       sidebar_open: false,
     };
+  },
+  computed: {
+    store() {
+      return useMainStore();
+    },
   },
   mounted() {
     window.addEventListener("resize", this.close_sidebar);
@@ -37,6 +50,7 @@ export default {
     window.removeEventListener("resize", this.close_sidebar);
   },
   methods: {
+    placeholderToast,
     show_if_inactive() {
       if (!this.sidebar_open) this.sidebar_open = true;
 
@@ -56,10 +70,10 @@ export default {
 
 @media (max-width: 1200px) {
   main.portal .portal_sidebar {
-    transform: translate(calc(-100% + 10px));
+    transform: translate(calc(-100% + 15px));
   }
   main.portal .portal_sidebar:hover {
-    transform: translate(calc(-100% + 20px));
+    transform: translate(calc(-100% + 25px));
   }
 }
 .branding-title {
@@ -122,5 +136,18 @@ export default {
   background-position: center;
   user-select: none;
   pointer-events: none;
+}
+.sidebar_overflow::-webkit-scrollbar {
+  display: none;
+}
+.sidebar_overflow {
+  overflow-y: auto;
+  /* layout */
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 100%;
+  padding: var(--padding-sidebar);
+  padding-bottom: calc(var(--padding-sidebar) + var(--height-sidebar-action));
 }
 </style>

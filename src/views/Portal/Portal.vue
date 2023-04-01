@@ -11,7 +11,7 @@
       <header class="portal_info">
         <div class="portal_info_title">
           <span class="portal_info_usertype"
-            >{{ store.doc && store.doc.is_teacher ? "Teacher" : "Student" }} Dashboard</span
+            >{{ store.is_teacher ? "Teacher" : "Student" }} Dashboard</span
           >
           <span class="portal_info_date">{{
             new Date().toLocaleDateString("en-US", {
@@ -25,9 +25,14 @@
         <div class="portal_info_welcome">Welcome Back {{ name }}</div>
       </header>
       <!-- calendar -->
-      <CalendarBlock @testclick="placeholderToast" />
+      <CalendarBlock @testclick="show_task($event)" />
     </div>
     <RightBar ref="RightBar" @close_left_bar="close_left_bar" />
+    <!-- show overlay only if router-view is active -->
+    <div class="overlay_center_view" v-if="$route.name !== 'portal'">
+      <div class="overlay_close" @click="$router.push('/portal')"></div>
+      <router-view class="router_center_view" />
+    </div>
   </main>
 </template>
 
@@ -37,6 +42,8 @@ import RightBar from "@/components/Portal/RightBar.vue";
 import CalendarBlock from "@/components/Portal/CalendarBlock.vue";
 import { useMainStore } from "@/store";
 import { placeholderToast } from "@svonk/util";
+// import styles from "./portal-overlay.css";
+import "./portal-overlay.css";
 export default {
   name: "AppPortal",
   components: {
@@ -62,11 +69,27 @@ export default {
       this.$refs.RightBar.close_sidebar();
     },
     placeholderToast,
+    show_task(test) {
+      let testJSON = JSON.stringify({
+        name: test.name,
+        group: test.class_name,
+        date: test.date.toLocaleDateString("en-US").replace("/", "-"),
+        description: test.description,
+        links: test.links,
+      });
+      this.$router.push({
+        name: "task",
+        query: {
+          task: testJSON,
+        },
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
+/* portal */
 main.portal {
   background-color: var(--color-secondary);
   /* sizing */
@@ -85,8 +108,9 @@ main.portal .portal_sidebar {
   background-color: var(--color-bg);
   position: relative;
   box-sizing: border-box;
-  padding: var(--padding-sidebar);
+  padding: 0;
 }
+
 main.portal .portal_sidebar {
   max-height: 800px;
   margin: auto 0;
@@ -163,5 +187,35 @@ header.portal_info {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+@media (max-width: 400px) {
+  main.portal .portal_sidebar {
+    min-width: 300px;
+    position: absolute;
+    top: 0;
+  }
+  .portal_sidebar.left-bar {
+    left: 0;
+  }
+  .portal_sidebar.right-bar {
+    right: 0;
+  }
+  .portal_content {
+    --padding-portal: 20px 30px;
+  }
+}
+@media (max-width: 340px) {
+  main.portal .portal_sidebar {
+    min-width: calc(100% - 40px);
+  }
+}
+/* print media */
+@media print {
+  main.portal .portal_sidebar {
+    display: none;
+  }
+  main.portal .portal_content {
+    padding: 0;
+  }
 }
 </style>

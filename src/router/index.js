@@ -59,6 +59,19 @@ const router = createRouter({
         //   },
         // },
         {
+          path: "download",
+          name: "download",
+          component: () => import("../views/Home/DownloadView.vue"),
+          meta: {
+            page_title: "Download [BETA]",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#16130e",
+            },
+            requiresAuth: false,
+          },
+        },
+        {
           path: "/:pathMatch(.*)*",
           name: "404",
           component: NotFound,
@@ -84,6 +97,80 @@ const router = createRouter({
         },
         requiresAuth: true,
       },
+      children: [
+        {
+          path: "/portal/onboarding",
+          name: "onboarding",
+          component: () => import("../views/Portal/Onboarding.vue"),
+          meta: {
+            page_title: "Onboarding",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#121212",
+            },
+            requiresAuth: true,
+          },
+        },
+
+        {
+          path: "/portal/add",
+          name: "addclass",
+          component: () => import("../views/Portal/AddClass.vue"),
+          meta: {
+            page_title: "Join a Class",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#121212",
+            },
+            requiresAuth: true,
+          },
+        },
+        {
+          path: "/portal/create",
+          name: "createclass",
+          component: () => import("../views/Portal/CreateClass.vue"),
+          meta: {
+            page_title: "Teacher | Create Class",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#121212",
+            },
+            requiresAuth: true,
+            requiresTeacher: true,
+          },
+        },
+        {
+          path: "/portal/new/:tasktype",
+          name: "newtask",
+          component: () => import("../views/Portal/AddTask.vue"),
+          meta: {
+            page_title: "Teacher | Add Task",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#121212",
+            },
+            requiresAuth: true,
+            requiresTeacher: true,
+          },
+        },
+        {
+          // specify param "test" in the route
+          path: "/portal/task",
+          name: "task",
+          component: () => import("../views/Portal/ViewTask.vue"),
+          meta: {
+            page_title: "View Test",
+            theme_color: {
+              light: "#ffffff",
+              dark: "#121212",
+            },
+            requiresAuth: false,
+            props: (route) => ({
+              task: route.query.task,
+            }),
+          },
+        },
+      ],
     },
     // redirect any /app routes to /portal
     {
@@ -94,6 +181,7 @@ const router = createRouter({
       },
     },
   ],
+  parseQuery: (query) => require("qs").parse(query),
 });
 
 export default router;

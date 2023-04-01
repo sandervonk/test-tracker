@@ -1,29 +1,30 @@
 <template>
   <div class="class_list">
-    <div v-if="classes" class="class_list__not_empty">
+    <div class="class_list__not_empty">
       <h5>Classes</h5>
       <hr class="class_list_hr" />
       <div class="classes_container">
         <div class="classes_container_class" v-for="class_obj of classes" :key="class_obj.name">
-          <span class="class_swatch" :style="{ '--color-class': class_obj.color }"></span>
+          <div
+            class="class_swatch"
+            :style="{ '--color-class': class_obj.color }"
+            title="Remove Class"
+            @click="store.remove_class(class_obj.id)"
+          >
+            <div class="class_swatch__icon"></div>
+          </div>
           <span class="class_name">{{ class_obj.name }}</span>
         </div>
         <div
           class="classes_container_class classes_container_class__add_class"
-          @click="$router.push('/portal/classes')"
+          @click="$router.push('/portal/add')"
         >
           <div class="class_swatch">
             <div class="class_swatch__add_icon"></div>
           </div>
-          <span class="class_name">Add a Class</span>
+          <span class="class_name">{{ !store.is_teacher ? "Add" : "Join" }} a Class</span>
         </div>
       </div>
-    </div>
-    <div v-else class="class_list__empty">
-      <h5>
-        No Classes Yet.
-        <router-link to="/portal/classes">Add Some!</router-link>
-      </h5>
     </div>
   </div>
 </template>
@@ -82,13 +83,15 @@ h5 {
   /* temp */
   padding: 0 var(--spacing-classes-alt);
 }
-.classes_container_class__add_class {
+.classes_container_class__add_class,
+.classes_container_class__create_class {
   background-color: var(--color-on-bg);
   padding: var(--spacing-classes-alt);
   border-radius: 10px;
   cursor: pointer;
 }
-.classes_container_class__add_class .class_name {
+.classes_container_class__add_class .class_name,
+.classes_container_class__create_class .class_name {
   font-size: 0.8em;
   opacity: 0.7;
   text-align: center;
@@ -96,7 +99,7 @@ h5 {
   padding-right: calc(15px + 20px);
 }
 .classes_container_class > * {
-  pointer-events: none;
+  user-select: none;
 }
 .class_swatch__add_icon {
   width: 100%;
@@ -108,6 +111,20 @@ h5 {
   background-repeat: no-repeat;
   background-position: center;
 }
+.class_swatch__icon {
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  filter: var(--filter-icon) var(--filter-test-calendar-icon);
+  background-image: url(@/assets/img/general/portal/remove.png);
+  background-image: url(@/assets/img/general/portal/remove.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.class_swatch:hover .class_swatch__icon {
+  visibility: visible;
+}
 .class_swatch {
   display: inline-block;
   width: 20px;
@@ -117,7 +134,8 @@ h5 {
   background-color: var(--color-class);
   filter: var(--filter-calendar-test);
 }
-.classes_container_class__add_class .class_swatch {
+.classes_container_class__add_class .class_swatch,
+.classes_container_class__create_class .class_swatch {
   background-color: var(--color-bg);
   filter: none;
 }

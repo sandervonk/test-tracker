@@ -1,8 +1,11 @@
 <template>
   <div class="right-bar portal_sidebar" :class="{ active: sidebar_open }" @click="show_if_inactive">
-    <div class="auth-action can-logout doprompt">Log Out</div>
-    <UpcomingTests />
-    <div class="flex-spacer"></div>
+    <div class="sidebar_overflow">
+      <div class="auth-action can-logout doprompt">Log Out</div>
+      <div class="flex-spacer"></div>
+      <UpcomingTests />
+      <div class="flex-spacer"></div>
+    </div>
     <button
       class="info_button click-action"
       title="About MV Test Tracker"
@@ -79,10 +82,10 @@ export default {
 
 @media (max-width: 1200px) {
   main.portal .portal_sidebar {
-    transform: translate(calc(100% - 10px));
+    transform: translate(calc(100% - 15px));
   }
   main.portal .portal_sidebar:hover {
-    transform: translate(calc(100% - 20px));
+    transform: translate(calc(100% - 25px));
   }
 }
 /* info icon */
@@ -111,5 +114,18 @@ export default {
   background-position: center;
   user-select: none;
   pointer-events: none;
+}
+.sidebar_overflow::-webkit-scrollbar {
+  display: none;
+}
+.sidebar_overflow {
+  overflow-y: auto;
+  /* layout */
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 100%;
+  padding: var(--padding-sidebar);
+  padding-bottom: calc(var(--padding-sidebar) + var(--height-sidebar-action));
 }
 </style>
